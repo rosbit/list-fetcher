@@ -12,7 +12,7 @@ type PageFetcher interface {
 }
 ```
 
-### Utility function
+### Utility functions
 
 ```go
 func FetchList(pf PageFetcher) (total int64, it <-chan json.RawMessage, err error) {
