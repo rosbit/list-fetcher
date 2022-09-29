@@ -29,6 +29,7 @@ func FetchList(pf PageFetcher) (total int64, it <-chan json.RawMessage, err erro
 			}
 
 			if _, l, e = pf.GetNextPage(); e != nil {
+				pf.ErrorOccurrs(e)
 				break
 			}
 		}

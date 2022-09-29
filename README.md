@@ -8,7 +8,8 @@ import (
 )
 
 type PageFetcher interface {
-	GetNextPage() (total int64, list []json.RawMessage, err error)
+    GetNextPage() (total int64, list []json.RawMessage, err error)
+    ErrorOccurrs(err error)
 }
 ```
 
