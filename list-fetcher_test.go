@@ -82,7 +82,7 @@ func (ipf *ItemPageFetcher) GetNextPage() (total int64, list []json.RawMessage, 
 }
 
 func (ipf *ItemPageFetcher) ErrorOccurrs(err error) {
-	fmt.Printf("error occurs when calling GetNextPage(page: %d): %v\n", ipf.page-1, err)
+	fmt.Printf("error occurs when calling GetNextPage(page: %d): %v\n", ipf.page, err)
 }
 
 func makeJSON(itemSlice []*item) ([]byte) {
