@@ -23,6 +23,7 @@ func FetchList(pf PageFetcher) (total int64, it <-chan json.RawMessage, err erro
 		count := int64(0)
 		for {
 			listPage <- l
+			pf.AdjustPage(l)
 			count += int64(len(l))
 			if count >= total {
 				break

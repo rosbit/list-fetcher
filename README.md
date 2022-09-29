@@ -9,6 +9,7 @@ import (
 
 type PageFetcher interface {
     GetNextPage() (total int64, list []json.RawMessage, err error)
+    AdjustPage(list []json.RawMessage)
     ErrorOccurrs(err error)
 }
 ```

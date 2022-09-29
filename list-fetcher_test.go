@@ -47,7 +47,7 @@ var (
 
 // PageFetcher implementation
 type ItemPageFetcher struct {
-	page int
+	*PageFetcherAdapter
 	pageSize int
 }
 func newItemPageFetcher(page, pageSize int) *ItemPageFetcher {
@@ -58,7 +58,9 @@ func newItemPageFetcher(page, pageSize int) *ItemPageFetcher {
 		pageSize = 3
 	}
 	return &ItemPageFetcher{
-		page: page,
+		PageFetcherAdapter: &PageFetcherAdapter{
+			Page: page,
+		},
 		pageSize: pageSize,
 	}
 }
@@ -66,7 +68,7 @@ func newItemPageFetcher(page, pageSize int) *ItemPageFetcher {
 func (ipf *ItemPageFetcher) GetNextPage() (total int64, list []json.RawMessage, err error) {
 	total = int64(len(items))
 
-	start := ipf.page * ipf.pageSize
+	start := ipf.Page * ipf.pageSize
 	end := start + ipf.pageSize
 	if start >= len(items) {
 		err = fmt.Errorf("no more data")
@@ -77,12 +79,7 @@ func (ipf *ItemPageFetcher) GetNextPage() (total int64, list []json.RawMessage, 
 	}
 	jb := makeJSON(items[start:end])
 	err = json.Unmarshal(jb, &list)
-	ipf.page += 1
 	return
-}
-
-func (ipf *ItemPageFetcher) ErrorOccurrs(err error) {
-	fmt.Printf("error occurs when calling GetNextPage(page: %d): %v\n", ipf.page, err)
 }
 
 func makeJSON(itemSlice []*item) ([]byte) {
