@@ -11,7 +11,7 @@ func FetchList(pf PageFetcher) (total int64, it <-chan json.RawMessage, err erro
 		err = e
 		return
 	}
-	if total = t; total <= 0 {
+	if total = t; total < 0 || len(l) == 0 {
 		return
 	}
 
@@ -24,9 +24,15 @@ func FetchList(pf PageFetcher) (total int64, it <-chan json.RawMessage, err erro
 		for {
 			listPage <- l
 			pf.AdjustPage(l)
-			count += int64(len(l))
-			if count >= total {
-				break
+			if total > 0 {
+				count += int64(len(l))
+				if count >= total {
+					break
+				}
+			} else {
+				if !pf.HasMore() {
+					break
+				}
 			}
 
 			if _, l, e = pf.GetNextPage(); e != nil {

@@ -14,7 +14,7 @@ func TestFetchList(t *testing.T) {
 		return
 	}
 	if total == 0 {
-		fmt.Printf("no result\n")
+		fmt.Printf("total: %d\n", total)
 	}
 	Dump(os.Stdout, it)
 }

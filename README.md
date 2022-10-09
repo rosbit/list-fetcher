@@ -10,6 +10,7 @@ import (
 type PageFetcher interface {
     GetNextPage() (total int64, list []json.RawMessage, err error)
     AdjustPage(list []json.RawMessage)
+    HasMore() bool // called if total is 0
     ErrorOccurrs(err error)
 }
 ```

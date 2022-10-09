@@ -8,6 +8,7 @@ import (
 type PageFetcher interface {
 	GetNextPage() (total int64, list []json.RawMessage, err error)
 	AdjustPage(list []json.RawMessage)
+	HasMore() bool
 	ErrorOccurrs(err error)
 }
 
@@ -17,6 +18,9 @@ type PageFetcherAdapter struct {
 }
 func (a *PageFetcherAdapter) GetNextPage() (total int64, list []json.RawMessage, err error) {
 	return
+}
+func (a *PageFetcherAdapter) HasMore() bool {
+	return false
 }
 func (a *PageFetcherAdapter) AdjustPage(list []json.RawMessage) {
 	a.Page += 1
